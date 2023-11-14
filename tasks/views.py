@@ -151,3 +151,9 @@ class SignUpView(LoginProhibitedMixin, FormView):
 
     def get_success_url(self):
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
+    
+
+
+def task_view(request):
+    """Display the current task view."""
+    return render(request, 'task_view.html')
