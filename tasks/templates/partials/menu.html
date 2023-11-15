@@ -4,9 +4,21 @@
       <a class="nav-link" href="#" id="teams-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="bi-list-task"></span>
       </a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="teams-dropdown">
-        <li><a class="dropdown-item" href="#">My teams</a></li>
-        <li><a class="dropdown-item" href="#">My tasks</a></li>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="teams-and-tasks-dropdown">
+        <!-- <li><a class="dropdown-item" href="#">My teams</a></li> -->
+        <li class="sub-menu"><a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">My Teams</a>
+          <ul class="dropdown-menu games-menu">
+            <li><a href="#" class="dropdown-item">Team 1</a></li>
+            <li><a href="#" class="dropdown-item">Team2</a></li>
+          </ul>
+        </li>
+        <!-- <li><a class="dropdown-item" href="#">My tasks</a></li> -->
+        <li class="sub-menu"><a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">My Tasks</a>
+          <ul class="dropdown-menu games-menu">
+            <li><a href="#" class="dropdown-item">Task 1</a></li>
+            <li><a href="#" class="dropdown-item">Task 2</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li class="nav-item dropdown">
