@@ -49,4 +49,5 @@ class User(AbstractUser):
         due_date = models.DateField()
         status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('completed', 'Completed')])
 
-        
+        def __str__(self):
+            return self.title
