@@ -42,12 +42,12 @@ class User(AbstractUser):
         
         return self.gravatar(size=60)
     
-    class Task(models.Model):
-        user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-        title = models.CharField(max_length=200)
-        description = models.TextField()
-        due_date = models.DateField()
-        status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('completed', 'Completed')])
+class Task(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    due_date = models.DateField()
+    status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('completed', 'Completed')])
 
-        def __str__(self):
-            return self.title
+    def __str__(self):
+        return self.title
