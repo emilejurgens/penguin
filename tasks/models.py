@@ -1,7 +1,8 @@
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
-from django.db import models
 from libgravatar import Gravatar
+from django.db import models
+from django.conf import settings
 
 class User(AbstractUser):
     """Model used for user authentication, and team member related information."""
@@ -40,3 +41,12 @@ class User(AbstractUser):
         """Return a URL to a miniature version of the user's gravatar."""
         
         return self.gravatar(size=60)
+    
+    class Task(models.Model):
+        user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+        title = models.CharField(max_length=200)
+        description = models.TextField()
+        due_date = models.DateField()
+        status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('completed', 'Completed')])
+
+        
