@@ -24,6 +24,9 @@
       {% else %}
         <p>No team members yet</p>
       {% endif %}
+      <a href='{% url 'add_members' %}' class="btn btn-primary">
+        Add team members
+      </a>
       {% else %}
         <p>No team joined or created yet</p>
         <a href='{% url 'create_team' %}' class="btn btn-primary">

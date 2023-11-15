@@ -111,18 +111,9 @@ class SignUpForm(NewPasswordMixin, forms.ModelForm):
     
 class CreateTeamForm(forms.ModelForm):
     """Form enabling users to create a team."""
+    pass
     
-    class Meta:
-        """Form options."""
-        
-        model = Team
-        fields = ['team_name', 'team_members']
-        
-    def save(self):
-        """Create a new team."""
-        
-        super().save(commit=False)
-        team = Team.objects.create_team(
-            self.cleaned_data.get('team_name'),
-        )
-        return team
+class AddMembersForm(forms.ModelForm):
+    """Form enabling users add members to a team."""
+    
+    pass

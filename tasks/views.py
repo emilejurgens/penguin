@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse
-from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, CreateTeamForm
+from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, CreateTeamForm, AddMembersForm
 from tasks.helpers import login_prohibited
 
 
@@ -161,6 +161,7 @@ class TeamView(LoginRequiredMixin, View):
 class CreateTeamView(LoginRequiredMixin, FormView):
     """Display the create team screen."""
 
+    model = CreateTeamForm
     form_class = CreateTeamForm
     template_name = "create_team.html"
 
@@ -168,5 +169,26 @@ class CreateTeamView(LoginRequiredMixin, FormView):
         self.object = form.save()
         return super().form_valid(form)
     
+    def get_success_url(self):
+        """Return redirect URL after successful update."""
+        messages.add_message(self.request, messages.SUCCESS, "Team created!")
+        return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
+    
+class AddMembersView(LoginRequiredMixin, View):
+    """Display the add members screen."""
+    
+    model = AddMembersForm
+    form_class = AddMembersForm
+    template_name = "add_members.html"
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        """Return redirect URL after successful update."""
+        messages.add_message(self.request, messages.SUCCESS, "Team member added!")
+        return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
+    
     def get(self, request):
-        return render(request, 'create_team.html')
+        return render(request, 'add_members.html')
