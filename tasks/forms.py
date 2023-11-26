@@ -7,7 +7,6 @@ from .models import Task
 from django.forms.widgets import DateInput
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django_select2.forms import Select2MultipleWidget
 
 class LogInForm(forms.Form):
     """Form enabling registered users to log in."""
@@ -119,11 +118,11 @@ class TaskForm(forms.ModelForm):
     
     due_date = forms.DateField(
         widget=forms.DateInput(attrs={'type':'date'}),
-        help_text='Format: DD-MM-YYYY'
+        help_text='Format: YYYY-MM-DD'
     )
     assigned_to= forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),
-        widget=Select2MultipleWidget,
+        widget=forms.CheckboxSelectMultiple,
         required=False
     )
     class Meta:
@@ -131,8 +130,8 @@ class TaskForm(forms.ModelForm):
         fields = ['title', 'description', 'due_date', 'status', 'assigned_to']
         
 
-        def due_date(self):
-            due_date = self.cleaned_data.get('due_date')
-            if due_date < timezone.localdate():
-                raise ValidationError ("The due date cannot be a past date.")
-            return due_date
+    def clean_due_date(self):
+        due_date = self.cleaned_data.get('due_date')
+        if due_date and due_date < timezone.localdate():
+            raise ValidationError ("The due date cannot be a past date.")
+        return due_date
