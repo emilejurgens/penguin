@@ -157,8 +157,10 @@ def create_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect ('success_url')
-        else:
-            form = TaskForm()
-        return render(request, 'create_task.html', {'form':form})
+            task = form.save(commit=False)
+            task.created_by = request.user
+            task.save()
+            return redirect ('some_url')
+    else:
+        form = TaskForm()
+    return render(request, 'create_task.html', {'form':form})

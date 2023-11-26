@@ -48,6 +48,5 @@ class Task(models.Model):
     description = models.TextField()
     due_date = models.DateField()
     status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('completed', 'Completed')])
-
-    def __str__(self):
-        return self.title
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator', on_delete=models.CASCADE)
+    assigned_to = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='assigned_tasks', blank=True)
