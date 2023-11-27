@@ -42,7 +42,7 @@ class User(AbstractUser):
         return self.gravatar(size=60)
     
 class Task(models.Model):
-    name = models.CharField(max_length = 30)
+    pass
 
 class Team(models.Model):
     name = models.CharField(max_length = 30)

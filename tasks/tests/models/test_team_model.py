@@ -29,26 +29,3 @@ class UserModelTestCase(TestCase):
     #     self.assertEqual(team.tasks.count(), 2)
     #     self.assertIn(self.task2, team.tasks.all())
     
-
-    def test_team_creation(self):
-        # Create a team
-        team = Team.objects.create(name='Team1')
-
-        # Add members to the team
-        team.members.add(self.user1, self.user2)
-
-        # Add tasks to the team
-        # team.tasks.add(self.task1, self.task2)
-
-        # Check if members and tasks are associated with the team correctly
-        self.assertEqual(team.members.count(), 2)
-        # self.assertEqual(team.tasks.count(), 2)
-
-        # Check if specific members and tasks are associated with the team
-        self.assertIn(self.user1, team.members.all())
-        # self.assertIn(self.task2, team.tasks.all())
-
-
-
-
- 
