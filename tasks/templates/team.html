@@ -1,0 +1,39 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Team Overview</h1>
+      {% if team is not None%}
+        <h4>Team Name</h4>
+        <p>{{ team.name }}</p>
+        <h4>Team Members</h4>
+      {% if team.members is not None%}
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Role</th>
+        </tr>
+        {% for member in team.members %}
+        <tr>
+          <td>{{ member.name }}</td>
+          <td>{{ member.role }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+        <p>No team members yet</p>
+      {% endif %}
+      <a href='{% url 'add_members' %}' class="btn btn-primary">
+        Add team members
+      </a>
+      {% else %}
+        <p>No team joined or created yet</p>
+        <a href='{% url 'create_team' %}' class="btn btn-primary">
+          Create team
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

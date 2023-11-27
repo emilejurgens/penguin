@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse
-from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm
+from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, CreateTeamForm, AddMembersForm
 from tasks.helpers import login_prohibited
 
 
@@ -151,3 +151,44 @@ class SignUpView(LoginProhibitedMixin, FormView):
 
     def get_success_url(self):
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
+    
+class TeamView(LoginRequiredMixin, View):
+    """Display the team screen."""
+    
+    def get(self, request):
+        return render(request, 'team.html')
+    
+class CreateTeamView(LoginRequiredMixin, FormView):
+    """Display the create team screen."""
+
+    model = CreateTeamForm
+    form_class = CreateTeamForm
+    template_name = "create_team.html"
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        """Return redirect URL after successful update."""
+        messages.add_message(self.request, messages.SUCCESS, "Team created!")
+        return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
+    
+class AddMembersView(LoginRequiredMixin, View):
+    """Display the add members screen."""
+    
+    model = AddMembersForm
+    form_class = AddMembersForm
+    template_name = "add_members.html"
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        """Return redirect URL after successful update."""
+        messages.add_message(self.request, messages.SUCCESS, "Team member added!")
+        return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
+    
+    def get(self, request):
+        return render(request, 'add_members.html')
