@@ -43,10 +43,10 @@ class User(AbstractUser):
         return self.gravatar(size=60)
     
 class Task(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    """ Create a Task class for the Tasks page and include all the variables and data needed to create and assign tasks to team members."""
     title = models.CharField(max_length=200)
     description = models.TextField()
     due_date = models.DateField()
-    status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('completed', 'Completed')])
+    status = models.CharField(max_length=50, choices=[('in_progress', 'In Progress'), ('completed', 'Completed')])
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator', on_delete=models.CASCADE)
     assigned_to = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='assigned_tasks', blank=True)

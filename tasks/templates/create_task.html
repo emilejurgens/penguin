@@ -1,11 +1,43 @@
 {% extends 'base_content.html' %}
-
-
 {% block content %}
+<style>
+    .create-task-form{
+        background-color: white;
+        max-width: 600px;
+        padding: 20px;
+        margin: 20px auto;
+        border-radius: 8px;
+    }
+    .create-task-form h2 {
+        text-align: center;
+        color: black;
+    }
+    .create-task-form label {
+        margin-top: 10px;
+    }
+    .create-task-form form {
+        display: flex;
+        flex-direction: column;
+    }
+    .create-task-form button {
+        color: black;
+        background-color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        margin-top: 15px;
+        border-radius: 4px;
+    }
+    .create-task-form button:hover {
+        background-color: grey;
+    }
+</style>
+<div class = "create-task-form">
     <h2>Create Task</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save Task</button>
     </form>
+</div>
 {% endblock %}

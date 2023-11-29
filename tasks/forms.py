@@ -115,10 +115,10 @@ class SignUpForm(NewPasswordMixin, forms.ModelForm):
     
 
 class TaskForm(forms.ModelForm):
-    
+    """Form for creating a task. Specifying the data type for variables."""
     due_date = forms.DateField(
         widget=forms.DateInput(attrs={'type':'date'}),
-        help_text='Format: YYYY-MM-DD'
+        help_text='Format: DD-MM-YYYY'
     )
     assigned_to= forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),
@@ -129,7 +129,7 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['title', 'description', 'due_date', 'status', 'assigned_to']
         
-
+    """Making sure the user cannot set a due date that is in the past."""
     def clean_due_date(self):
         due_date = self.cleaned_data.get('due_date')
         if due_date and due_date < timezone.localdate():

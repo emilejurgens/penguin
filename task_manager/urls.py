@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from tasks import views
-from tasks.views import create_task
+from tasks.views import create_task, show_all_tasks
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +30,5 @@ urlpatterns = [
     path('profile/', views.ProfileUpdateView.as_view(), name='profile'),
     path('sign_up/', views.SignUpView.as_view(), name='sign_up'),
     path('tasks/create/', create_task, name= 'create_task'),
+    path('tasks/all/', show_all_tasks, name ='all_tasks'),
 ]

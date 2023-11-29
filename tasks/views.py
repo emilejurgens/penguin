@@ -10,6 +10,7 @@ from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse
 from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, TaskForm
 from tasks.helpers import login_prohibited
+from .models import Task
 
 
 @login_required
@@ -159,8 +160,13 @@ def create_task(request):
         if form.is_valid():
             task = form.save(commit=False)
             task.created_by = request.user
+            task.user = request.user
             task.save()
-            return redirect ('some_url')
+            return redirect ('all_tasks')
     else:
         form = TaskForm()
     return render(request, 'create_task.html', {'form':form})
+
+def show_all_tasks(request):
+    all_tasks = Task.objects.all()
+    return render(request, 'all_tasks.html', {'all_tasks': all_tasks})
