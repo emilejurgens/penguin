@@ -111,9 +111,54 @@ class SignUpForm(NewPasswordMixin, forms.ModelForm):
     
 class CreateTeamForm(forms.ModelForm):
     """Form enabling users to create a team."""
-    pass
+    class Meta:
+        model = Team
+        fields = ['name', 'members']
+        exclude = ['tasks']
+
+    name = forms.CharField(
+        max_length = 30,
+        required = True
+    )
+    members = forms.ModelMultipleChoiceField(
+        queryset = User.objects.all().order_by('username'),
+        # widget = forms.CheckboxSelectMultiple,
+        required = False
+    )
+
+    def save(self, commit=True):
+        team = super().save(commit=False) 
+        if commit:
+            team.save() 
+            members = self.cleaned_data.get('members')
+            if members:
+                team.members.set(members) 
+        return team
     
 class AddMembersForm(forms.ModelForm):
-    """Form enabling users add members to a team."""
-    
+    # """Form enabling users add members to a team."""
+    # team = forms.CharField(label='Name of the team you want to add a member to', widget=forms.Input())
+
+    # def __init__(self, team=None, **kwargs):
+    #     """Construct new form instance with a team instance."""
+        
+    #     super().__init__(**kwargs)
+    #     self.user = team
+
+    # def clean(self):
+    #     """Clean the data and generate messages for any errors."""
+
+    #     super().clean()
+    #     team = self.cleaned_data.get('name')
+    #     if team is None:
+    #         self.add_error('name', "Team name is invalid")
+
+    # def save(self):
+    #     """Save the team's new members."""
+
+    #     new_members = self.cleaned_data['members']
+    #     if self.team is not None:
+    #         self.team.set_members(new_members)
+    #         self.team.save()
+    #     return self.team
     pass
