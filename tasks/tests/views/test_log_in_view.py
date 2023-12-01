@@ -8,7 +8,8 @@ from tasks.tests.helpers import LogInTester, MenuTesterMixin, reverse_with_next
 
 class LogInViewTestCase(TestCase, LogInTester, MenuTesterMixin):
     """Tests of the log in view."""
-
+    databases = '__all__'
+    
     fixtures = ['tasks/tests/fixtures/default_user.json']
 
     def setUp(self):

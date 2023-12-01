@@ -6,7 +6,8 @@ from tasks.tests.helpers import LogInTester
 
 class LogOutViewTestCase(TestCase, LogInTester):
     """Tests of the log out view."""
-
+    databases = '__all__'
+    
     fixtures = ['tasks/tests/fixtures/default_user.json']
 
     def setUp(self):

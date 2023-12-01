@@ -9,7 +9,8 @@ from tasks.tests.helpers import reverse_with_next
 
 class PasswordViewTest(TestCase):
     """Test suite for the password view."""
-
+    databases = '__all__'
+    
     fixtures = [
         'tasks/tests/fixtures/default_user.json'
     ]
