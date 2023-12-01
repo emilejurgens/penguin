@@ -12,17 +12,29 @@
       <table>
         <tr>
           <th>Name</th>
-          <th>Role</th>
         </tr>
         {% for member in team.members %}
         <tr>
           <td>{{ member.name }}</td>
-          <td>{{ member.role }}</td>
         </tr>
         {% endfor %}
       </table>
       {% else %}
         <p>No team members yet</p>
+      {% endif %}
+      {% if team.tasks is not None%}
+      <table>
+        <tr>
+          <th>Task</th>
+        </tr>
+        {% for task in team.task %}
+        <tr>
+          <td>{{ team.task }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+        <p>No tasks yet</p>
       {% endif %}
       <a href='{% url 'add_members' %}' class="btn btn-primary">
         Add team members

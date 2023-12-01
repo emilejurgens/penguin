@@ -111,7 +111,18 @@ class SignUpForm(NewPasswordMixin, forms.ModelForm):
     
 class CreateTeamForm(forms.ModelForm):
     """Form enabling users to create a team."""
-    pass
+    members = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True,
+    )
+        
+    class Meta:
+        """Form options."""
+        
+        model = Team
+        fields = ['name', 'members']
+
     
 class AddMembersForm(forms.ModelForm):
     """Form enabling users add members to a team."""

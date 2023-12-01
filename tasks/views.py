@@ -10,6 +10,7 @@ from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse
 from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, CreateTeamForm, AddMembersForm
 from tasks.helpers import login_prohibited
+from .models import User, Team
 
 
 @login_required
@@ -154,6 +155,20 @@ class SignUpView(LoginProhibitedMixin, FormView):
     
 class TeamView(LoginRequiredMixin, View):
     """Display the team screen."""
+    model = Team
+    template_name = "team.html"
+    context_object_name = 'team'
+
+    def get_queryset(self):
+        current_user = self.request.user
+        teams = Team.objects.filter(members=current_user)
+        return teams
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = self.request.user
+        context["teams"] = self.get_queryset()
+        return context
     
     def get(self, request):
         return render(request, 'team.html')
