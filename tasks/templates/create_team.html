@@ -6,8 +6,8 @@
       <h1>Create a team</h1>
       <form action="{% url 'create_team' %}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        {% comment %} {% include 'partials/bootstrap_form.html' with form=form %} {% endcomment %}
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        {% include 'partials/bootstrap_form.html' with form=form %}
         <input type="submit" value="Create team" class="btn btn-primary">
       </form>
     </div>

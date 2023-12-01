@@ -11,6 +11,8 @@ from django.urls import reverse
 from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, CreateTeamForm, AddMembersForm
 from tasks.helpers import login_prohibited
 from .models import User, Team
+from django.views.generic import ListView
+
 
 
 @login_required
@@ -153,11 +155,11 @@ class SignUpView(LoginProhibitedMixin, FormView):
     def get_success_url(self):
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
     
-class TeamView(LoginRequiredMixin, View):
+class TeamView(LoginRequiredMixin, ListView):
     """Display the team screen."""
     model = Team
     template_name = "team.html"
-    context_object_name = 'team'
+    context_object_name = 'teams'
 
     def get_queryset(self):
         current_user = self.request.user
@@ -167,11 +169,8 @@ class TeamView(LoginRequiredMixin, View):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user"] = self.request.user
-        context["teams"] = self.get_queryset()
         return context
     
-    def get(self, request):
-        return render(request, 'team.html')
     
 class CreateTeamView(LoginRequiredMixin, FormView):
     """Display the create team screen."""

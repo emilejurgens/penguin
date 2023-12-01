@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
 from .models import User, Team
 
+
 class LogInForm(forms.Form):
     """Form enabling registered users to log in."""
 
@@ -113,7 +114,12 @@ class CreateTeamForm(forms.ModelForm):
     """Form enabling users to create a team."""
     members = forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple(
+                attrs={
+                    "checked": "",
+                    "class": "column-checkbox"
+                }
+            ),
         required=True,
     )
         
@@ -122,6 +128,18 @@ class CreateTeamForm(forms.ModelForm):
         
         model = Team
         fields = ['name', 'members']
+    
+    def save(self):
+        """Create a new team."""
+        
+        super().save(commit=False)
+        team = Team.objects.create(
+            name=self.cleaned_data.get('name'),
+        )
+        members = self.cleaned_data.get('members')
+        for member in members:
+            team.members.add(member)
+        return team
 
     
 class AddMembersForm(forms.ModelForm):
