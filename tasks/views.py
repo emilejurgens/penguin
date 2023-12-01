@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ImproperlyConfigured
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse
@@ -162,6 +162,7 @@ def create_task(request):
             task.created_by = request.user
             task.user = request.user
             task.save()
+            form.save_m2m()
             return redirect ('all_tasks')
     else:
         form = TaskForm()
@@ -169,4 +170,16 @@ def create_task(request):
 
 def show_all_tasks(request):
     all_tasks = Task.objects.all()
+    for task in all_tasks:
+        print(task.title, task.assigned_to.all())
     return render(request, 'all_tasks.html', {'all_tasks': all_tasks})
+
+def update_status(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    return redirect('create_task')
+
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    if task.created_by == request.user: 
+        task.delete()
+    return redirect('all_tasks')

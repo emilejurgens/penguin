@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from tasks import views
-from tasks.views import create_task, show_all_tasks
+from tasks.views import create_task, show_all_tasks, delete_task, update_status
 
 
 urlpatterns = [
@@ -31,4 +31,6 @@ urlpatterns = [
     path('sign_up/', views.SignUpView.as_view(), name='sign_up'),
     path('tasks/create/', create_task, name= 'create_task'),
     path('tasks/all/', show_all_tasks, name ='all_tasks'),
+    path('task/delete/<int:task_id>/', views.delete_task, name='delete_task'),
+    path('task/update/<int:task_id>/', views.update_status, name='update_status'),
 ]

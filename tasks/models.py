@@ -42,8 +42,14 @@ class User(AbstractUser):
         
         return self.gravatar(size=60)
     
+    @property
+    def full_name(self):
+        """Get the full name of the user to ensure that the name shows up for the assinged to field in the tasks page."""
+        return f'{self.first_name} {self.last_name}'
+    
 class Task(models.Model):
     """ Create a Task class for the Tasks page and include all the variables and data needed to create and assign tasks to team members."""
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
     description = models.TextField()
     due_date = models.DateField()
