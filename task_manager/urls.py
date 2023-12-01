@@ -27,4 +27,8 @@ urlpatterns = [
     path('password/', views.PasswordView.as_view(), name='password'),
     path('profile/', views.ProfileUpdateView.as_view(), name='profile'),
     path('sign_up/', views.SignUpView.as_view(), name='sign_up'),
+    path('form-team/', views.form_team, name='form_team'),
+    path('invite-team-members/', views.invite_team_members, name='invite_team_members'),
+    path('project/', views.project, name='project'),
+    path('my_tasks/', views.my_tasks, name='my_tasks'),
 ]

@@ -13,11 +13,16 @@ from tasks.helpers import login_prohibited
 
 
 @login_required
-def dashboard(request):
-    """Display the current user's dashboard."""
 
-    current_user = request.user
-    return render(request, 'dashboard.html', {'user': current_user})
+def dashboard(request):
+
+    if not request.session.get('welcome_message_displayed', False):
+        request.session['welcome_message_displayed'] = True
+        context = {'show_welcome_message': True}
+    else:
+        context = {'show_welcome_message': False}
+
+    return render(request, 'dashboard.html', context)
 
 
 @login_prohibited
@@ -25,6 +30,22 @@ def home(request):
     """Display the application's start/home screen."""
 
     return render(request, 'home.html')
+
+def form_team(request):
+    return render(request, 'form_team.html')
+
+def invite_team_members(request):
+    return render(request, 'invite_team_members.html')
+
+def project(request):
+    return render(request, 'project.html')
+
+def my_tasks(request):
+    return render(request, 'my_tasks.html')
+
+
+
+
 
 
 class LoginProhibitedMixin:
@@ -68,7 +89,6 @@ class LogInView(LoginProhibitedMixin, View):
 
     def post(self, request):
         """Handle log in attempt."""
-
         form = LogInForm(request.POST)
         self.next = request.POST.get('next') or settings.REDIRECT_URL_WHEN_LOGGED_IN
         user = form.get_user()
