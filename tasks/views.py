@@ -154,18 +154,20 @@ class SignUpView(LoginProhibitedMixin, FormView):
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
     
 
-def create_task(request):
-    if request.method == 'POST':
-        form = TaskForm(request.POST)
-        if form.is_valid():
+def create_task(request, task_id = None):
+    if task_id:
+        task = get_object_or_404(Task,pk=task_id, created_by=request.user)
+        form = TaskForm(request.POST or None, instance = task)
+    else:
+        form = TaskForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
             task = form.save(commit=False)
             task.created_by = request.user
             task.user = request.user
             task.save()
             form.save_m2m()
             return redirect ('all_tasks')
-    else:
-        form = TaskForm()
+
     return render(request, 'create_task.html', {'form':form})
 
 def show_all_tasks(request):

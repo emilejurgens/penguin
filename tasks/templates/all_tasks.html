@@ -64,13 +64,13 @@
                 </form>
             </td>
             <td>
-                <a href="{% url 'update_status' task.id %}">
+                <a href="{% url 'create_task' task.id %}">
                     <button type="button">Update Status</button>
                 </a>
             </td>
         </tr>
         {% empty %}
-        <tr><td colspan="7">No Tasks</td></tr>
+        <tr><td colspan="6">No Tasks.</td></tr>
         {% endfor %}
     </tbody>
 </table>
