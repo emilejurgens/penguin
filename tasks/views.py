@@ -178,6 +178,7 @@ class CreateTeamView(LoginRequiredMixin, FormView):
     model = CreateTeamForm
     form_class = CreateTeamForm
     template_name = "create_team.html"
+    
 
     def form_valid(self, form):
         self.object = form.save()

@@ -1,0 +1,36 @@
+
+{% for field in form %}
+  {% if field.name != 'members' %}
+    <div class="mb-3">
+      <div>
+        {{ field.label_tag }}  
+      </div>
+      <div class="">
+        {{ field }}
+      </div>
+      {% if field.errors %}
+        <div class="invalid-feedback">
+          {{ field.errors }}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endfor %}
+
+<p>Members:</p>
+<div class="overflow-auto border rounded" style="max-height: 495px;">
+  {% for field in form.members %}
+    <div class="form-check">
+      {{ field }}
+      {{ field.label_tag }}
+    </div>
+  {% endfor %}
+</div>
+
+<div class="mb-3">
+  {% if form.members.errors %}
+    <div class="invalid-feedback">
+      {{ form.members.errors }}
+    </div>
+  {% endif %}
+</div>

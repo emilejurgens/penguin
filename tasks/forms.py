@@ -112,14 +112,11 @@ class SignUpForm(NewPasswordMixin, forms.ModelForm):
     
 class CreateTeamForm(forms.ModelForm):
     """Form enabling users to create a team."""
+
+    
     members = forms.ModelMultipleChoiceField(
-        queryset=User.objects.all(),
-        widget=forms.CheckboxSelectMultiple(
-                attrs={
-                    "checked": "",
-                    "class": "column-checkbox"
-                }
-            ),
+        queryset=User.objects.all().order_by('username'),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
         required=True,
     )
         
@@ -129,9 +126,9 @@ class CreateTeamForm(forms.ModelForm):
         model = Team
         fields = ['name', 'members']
     
+
     def save(self):
         """Create a new team."""
-        
         super().save(commit=False)
         team = Team.objects.create(
             name=self.cleaned_data.get('name'),
@@ -139,6 +136,7 @@ class CreateTeamForm(forms.ModelForm):
         members = self.cleaned_data.get('members')
         for member in members:
             team.members.add(member)
+        
         return team
 
     
