@@ -1,0 +1,13 @@
+[
+{
+  "model": "tasks.team",
+  "pk": 15,
+  "fields": {
+    "name": "test team",
+    "members": [
+      1,
+      2
+    ]
+  }
+}
+]
