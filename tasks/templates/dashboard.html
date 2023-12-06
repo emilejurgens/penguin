@@ -107,15 +107,15 @@
 {% if show_welcome_message %}
 <div class="welcome-message">
     <div class="line1">Welcome to your dashboard</div>
-    <div class="line2">Here you can view your profile"I need to edit this"</div>
+    <div class="line2">Here you can view your profile</div>
 </div>
 {% endif %}
 <div class="dashboard-container">
     <div class="dashboard-item form-team">
-        <a href="{% url 'create_team' %}"><h2>create Team</h2></a>
+        <a href="{% url 'create_team' %}"><h2>Create Team</h2></a>
     </div>
     <div class="dashboard-item invite">
-        <a href="{% url 'teams' %}"><h2>Invite Team Members</h2></a>
+        <a href="{% url 'teams' %}"><h2>Edit your Teams</h2></a>
     </div>
     <div class="dashboard-item tasks">
         <a href="{% url 'all_tasks' %}"><h2>My Tasks</h2></a>
