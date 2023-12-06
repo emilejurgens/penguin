@@ -178,7 +178,12 @@ def show_all_tasks(request):
 
 def update_status(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
-    return redirect('create_task')
+    if request.method == 'POST':
+        task.status = request.POST.get('status')
+        task.save()
+        return redirect('all_tasks')
+    return render(request, 'update_task.html', {'task': task})
+
 
 def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)

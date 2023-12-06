@@ -7,7 +7,6 @@ from .models import Task
 from django.forms.widgets import DateInput
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django_select2.forms import ModelSelect2MultipleWidget
 
 class LogInForm(forms.Form):
     """Form enabling registered users to log in."""
