@@ -4,12 +4,13 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ImproperlyConfigured
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse
-from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm
+from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, TaskForm
 from tasks.helpers import login_prohibited
+from .models import Task
 
 
 @login_required
@@ -157,3 +158,40 @@ class SignUpView(LoginProhibitedMixin, FormView):
 def task_view(request):
     """Display the current task view."""
     return render(request, 'task_view.html')
+
+def create_task(request, task_id = None):
+    if task_id:
+        task = get_object_or_404(Task,pk=task_id, created_by=request.user)
+        form = TaskForm(request.POST or None, instance = task)
+    else:
+        form = TaskForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+            task = form.save(commit=False)
+            task.created_by = request.user
+            task.user = request.user
+            task.save()
+            form.save_m2m()
+            return redirect ('all_tasks')
+
+    return render(request, 'create_task.html', {'form':form})
+
+def show_all_tasks(request):
+    all_tasks = Task.objects.all()
+    for task in all_tasks:
+        print(task.title, task.assigned_to.all())
+    return render(request, 'all_tasks.html', {'all_tasks': all_tasks})
+
+def update_status(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    if request.method == 'POST':
+        task.status = request.POST.get('status')
+        task.save()
+        return redirect('all_tasks')
+    return render(request, 'update_task.html', {'task': task})
+
+
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    if task.created_by == request.user: 
+        task.delete()
+    return redirect('all_tasks')
