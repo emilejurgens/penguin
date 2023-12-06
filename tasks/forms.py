@@ -2,7 +2,8 @@
 from django import forms
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
-from .models import User
+from .models import User, Team
+
 
 class LogInForm(forms.Form):
     """Form enabling registered users to log in."""
@@ -108,3 +109,38 @@ class SignUpForm(NewPasswordMixin, forms.ModelForm):
             password=self.cleaned_data.get('new_password'),
         )
         return user
+    
+class CreateTeamForm(forms.ModelForm):
+    """Form enabling users to create a team."""
+
+    
+    members = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all().order_by('username'),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        required=True,
+    )
+        
+    class Meta:
+        """Form options."""
+        
+        model = Team
+        fields = ['name', 'members']
+    
+
+    def save(self):
+        """Create a new team."""
+        super().save(commit=False)
+        team = Team.objects.create(
+            name=self.cleaned_data.get('name'),
+        )
+        members = self.cleaned_data.get('members')
+        for member in members:
+            team.members.add(member)
+        
+        return team
+
+    
+class AddMembersForm(forms.ModelForm):
+    """Form enabling users add members to a team."""
+    
+    pass

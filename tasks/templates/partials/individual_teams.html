@@ -1,0 +1,36 @@
+{% for team in teams %}
+  <div class="card border-0">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <h5>Team Name</h5>
+        <a href='{% url 'add_members' %}' class="btn btn-primary">
+          Edit Team
+        </a>
+      </div>
+      <p>
+        {{ team.name }}
+      </p>
+      <h5>Team Members</h4>
+      {% if team.members.all is not None%}
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          {% for member in team.members.all %}
+          <tr>
+            <td>{{ member.username }}</td>
+            <td>{{ member.email }}</td>
+            <td>{{ member.last_name  }}, {{ member.first_name }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <p>No team members yet</p>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}

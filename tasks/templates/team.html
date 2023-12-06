@@ -1,0 +1,20 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <h1>Teams</h1>
+        <a href='{% url 'create_team' %}' class="btn btn-primary">
+          Create team
+        </a>
+      </div>
+      {% if teams %}
+        {% include 'partials/individual_teams.html' with teams=teams %}
+      {% else %}
+        <p>No team joined or created yet</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
