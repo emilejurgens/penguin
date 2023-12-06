@@ -17,7 +17,7 @@
             padding: 20px;
             margin-top: 56px;
             background-color: #d3d3d3;
-            animation: fadeInContainer 3s ease-in 2s forwards;
+            animation: fadeInContainer 1.8s ease-in 0.2s forwards;
             grid-template-areas:
                 "formteam invite project project project project project project project project todo todo"
                 "tasks tasks project project project project project project project project todo todo"
@@ -52,7 +52,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -63,6 +63,7 @@
         }
         .dashboard-item:hover {
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: scale(1.05); 
         }
         .dashboard-item h2 {
             color: #333;
@@ -75,7 +76,7 @@
             transform: translate(-50%, -50%);
             color: #303030;
             text-align: center;
-            animation: fadeOut 3s ease-in-out forwards;
+            animation: fadeOut 2.2s ease-in-out forwards;
             z-index: 100;
         }
         .welcome-message .line1 {
