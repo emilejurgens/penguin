@@ -15,8 +15,8 @@ class UserModelTestCase(TestCase):
         self.user1 = User.objects.create(username='@janedoe', email = 'janedoe@example.org')
         self.user2 = User.objects.create(username='@johndoe',  email = 'johndoe@example.org')
     
-        self.task1 = Task.objects.create(name='Task 1')
-        self.task2 = Task.objects.create(name='Task 2')
+        self.task1 = Task.objects.create(title='Task 1')
+        self.task2 = Task.objects.create(title='Task 2')
 
     def test_valid_team(self):
         self._assert_team_is_valid()
