@@ -110,55 +110,69 @@ class SignUpForm(NewPasswordMixin, forms.ModelForm):
         return user
     
 class CreateTeamForm(forms.ModelForm):
-    """Form enabling users to create a team."""
-    class Meta:
-        model = Team
-        fields = ['name', 'members']
-        exclude = ['tasks']
+    pass
+    
+class EditTeamForm(forms.Form):
+    """Form enabling users to add and delete team members and change team's name."""
 
-    name = forms.CharField(
-        max_length = 30,
-        required = True
+    old_name = forms.CharField(
+        label = 'Current Team Name', 
+        required = True, 
+        max_length = 30
     )
-    members = forms.ModelMultipleChoiceField(
-        queryset = User.objects.all().order_by('username'),
-        # widget = forms.CheckboxSelectMultiple,
+    new_name = forms.CharField(
+        label = 'New Team Name', 
+        required = False,
+        max_length = 30
+    )
+    members_to_add = forms.ModelMultipleChoiceField(
+        queryset = User.objects.all().order_by('username'), 
+        widget = forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        required = False
+    )
+    members_to_delete = forms.ModelMultipleChoiceField(
+        queryset = User.objects.all().order_by('username'),  
+        widget = forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
         required = False
     )
 
-    def save(self, commit=True):
-        team = super().save(commit=False) 
-        if commit:
-            team.save() 
-            members = self.cleaned_data.get('members')
-            if members:
-                team.members.set(members) 
-        return team
-    
-class AddMembersForm(forms.ModelForm):
-    # """Form enabling users add members to a team."""
-    # team = forms.CharField(label='Name of the team you want to add a member to', widget=forms.Input())
+    def clean(self):
+        cleaned_data = super().clean()
+        old_name = cleaned_data.get('old_name')
+        new_name = cleaned_data.get('new_name')
 
-    # def __init__(self, team=None, **kwargs):
-    #     """Construct new form instance with a team instance."""
+        try:
+            team = Team.objects.get(name=old_name)
+        except Team.DoesNotExist:
+            self.add_error('old_name', 'Team with this name does not exist')
+            raise forms.ValidationError("Team with this name does not exist.")
         
-    #     super().__init__(**kwargs)
-    #     self.user = team
+        if new_name:
+            try:
+                team_with_new_name = Team.objects.get(name=new_name)
+                self.add_error('new_name', 'Team with this name already exists')
+            except Team.DoesNotExist:
+                pass
+        
 
-    # def clean(self):
-    #     """Clean the data and generate messages for any errors."""
+        return cleaned_data
+    
+    def save(self):
+        """Save the changes made to a team."""
+        old_team_name = self.cleaned_data['old_name']
+        new_name = self.cleaned_data['new_name']
+        members_to_add = self.cleaned_data['members_to_add']
+        members_to_delete = self.cleaned_data['members_to_delete']
+        try:
+            team = Team.objects.get(name=old_team_name)
+            if new_name:
+                team.name = new_name
 
-    #     super().clean()
-    #     team = self.cleaned_data.get('name')
-    #     if team is None:
-    #         self.add_error('name', "Team name is invalid")
+            if members_to_add:
+                team.members.add(*members_to_add)
 
-    # def save(self):
-    #     """Save the team's new members."""
-
-    #     new_members = self.cleaned_data['members']
-    #     if self.team is not None:
-    #         self.team.set_members(new_members)
-    #         self.team.save()
-    #     return self.team
-    pass
+            if members_to_delete:
+                team.members.remove(*members_to_delete)
+            team.save()
+        except Team.DoesNotExist:
+            raise forms.ValidationError("Team with this name does not exist!")

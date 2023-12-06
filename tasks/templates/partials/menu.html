@@ -2,42 +2,11 @@
   <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
     <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="teams-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="bi-list-task"></span>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="teams-and-tasks-dropdown">
-        <!-- <li><a class="dropdown-item" href="#">My teams</a></li> -->
-        <li class="sub-menu"><a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">My Teams</a>
-          <ul class="dropdown-menu games-menu">
-            {% if teams %}
-              {% for team in teams %}
-              <li><a href="#" class="dropdown-item">{{ team }}</a></li>
-              {% endfor %}
-            {% endif %}
-          </ul>
-        </li>
-        <!-- <li><a class="dropdown-item" href="#">My tasks</a></li> -->
-        <li class="sub-menu"><a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">My Tasks</a>
-          <ul class="dropdown-menu games-menu">
-            {% if tasks %}
-              {% for task in tasks %}
-              <li><a href="#" class="dropdown-item">{{ task }}</a></li>
-              {% endfor %}
-            {% endif %}
-            <!-- <li><a href="#" class="dropdown-item">Task 1</a></li>
-            <li><a href="#" class="dropdown-item">Task 2</a></li> -->
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li class="nav-item dropdown">
-      <a class="nav-link" href="#" id="user-account-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="bi-person-circle"></span>
       </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-account-dropdown">
         <li><a class="dropdown-item" href="{% url 'profile' %}">Change profile</a></li>
         <li><a class="dropdown-item" href="{% url 'password' %}">Change password</a></li>
-        <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
-        <li><a class="dropdown-item" href="{% url 'team' %}">Team</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="{% url 'log_out' %}">Log out</a></li>
       </ul>
