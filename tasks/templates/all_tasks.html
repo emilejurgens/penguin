@@ -1,6 +1,13 @@
 {% extends 'base_content.html' %}
 {% block content %}
 <style>
+    .tasks-container {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 60px);
+        box-sizing: border-box;
+    }
     .return-button-container {
         margin-bottom: 20px;
         text-align: right;
@@ -13,11 +20,16 @@
         border-radius: 5px;
         display: inline-block;
     }
-</style>   
-<div class="container">
-    <h1>Coursework Details </h1>
+    h1 {
+        margin-top: 0;
+        font-size: 24px;
+    }
+    
+</style>
+<div class="tasks-container">
     <div class="return-button-container">
         <a href="{% url 'dashboard' %}" class="return-button">Return to Dashboard</a>
     </div>
+    <h1>My Tasks</h1>
 </div>
 {% endblock %}

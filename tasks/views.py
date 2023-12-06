@@ -10,6 +10,8 @@ from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse
 from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm
 from tasks.helpers import login_prohibited
+from .models import TodoItem 
+from django.http import HttpResponseRedirect
 
 
 @login_required
@@ -29,21 +31,22 @@ def dashboard(request):
 def home(request):
     """Display the application's start/home screen."""
 
-    return render(request, 'home.html')
+    return render(request, 'home.html') 
 
-def form_team(request):
-    return render(request, 'form_team.html')
+def create_team(request):
+    return render(request, 'create_team.html')
 
-def invite_team_members(request):
-    return render(request, 'invite_team_members.html')
+def team(request):
+    return render(request, 'team.html')
 
 def project(request):
     return render(request, 'project.html')
 
-def my_tasks(request):
-    return render(request, 'my_tasks.html')
+def all_tasks(request):
+    return render(request, 'all_tasks.html')
 
-
+def todo(request):
+    return render(request, 'todo.html')
 
 
 
@@ -171,3 +174,22 @@ class SignUpView(LoginProhibitedMixin, FormView):
 
     def get_success_url(self):
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
+    
+    
+
+#To do list       
+def todo(request):
+    tasks = TodoItem.objects.all()
+    return render(request, 'todo.html', {'tasks': tasks})
+
+def add_task(request):
+    if request.method == 'POST':
+        new_task = TodoItem(content=request.POST['content'])
+        new_task.save()
+    return redirect('todo')  
+
+def delete_task(request, task_id):
+    task_to_delete = TodoItem.objects.get(id=task_id)
+    task_to_delete.delete()
+    return redirect('todo')
+

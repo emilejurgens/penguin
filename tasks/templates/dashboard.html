@@ -11,36 +11,39 @@
         .dashboard-container {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            grid-template-rows: auto auto auto;
             gap: 20px;
             padding: 20px;
             margin-top: 56px;
             background-color: #d3d3d3;
-            opacity: 0;
-            visibility: hidden;
             animation: fadeInContainer 5s forwards 1s;
             grid-template-areas:
-            "formteam invite project project project project project project project project todo todo"
-            "tasks tasks project project project project project project project project todo todo"
-            "notification notification notification notification notification notification notification notification notification notification todo todo";
+                "formteam invite project project project project project project project project todo todo"
+                "tasks tasks project project project project project project project project todo todo"
+                "activitylog activitylog activitylog activitylog activitylog activitylog activitylog activitylog activitylog activitylog todo todo";
         }
+        
         .dashboard-item.form-team { 
             grid-area: formteam; 
         }
+        
         .dashboard-item.invite { 
             grid-area: invite; 
         }
+        
         .dashboard-item.tasks {
             grid-area: tasks; 
         }
+        
         .dashboard-item.project { 
             grid-area: project; 
         }
+        
         .dashboard-item.todo { 
             grid-area: todo; 
         }
-        .dashboard-item.notification { 
-            grid-area: notification; 
+        
+        .dashboard-item.activity_log { 
+            grid-area: activitylog; 
         }
         .dashboard-item {
             background-color: #fff;
@@ -107,22 +110,22 @@
 {% endif %}
 <div class="dashboard-container">
     <div class="dashboard-item form-team">
-        <a href="{% url 'form_team' %}"><h2>Form Team</h2></a>
+        <a href="{% url 'create_team' %}"><h2>create Team</h2></a>
     </div>
     <div class="dashboard-item invite">
-        <a href="{% url 'invite_team_members' %}"><h2>Invite Team Members</h2></a>
+        <a href="{% url 'team' %}"><h2>Invite Team Members</h2></a>
     </div>
     <div class="dashboard-item tasks">
-        <a href="{% url 'my_tasks' %}"><h2>My Tasks</h2></a>
+        <a href="{% url 'all_tasks' %}"><h2>My Tasks</h2></a>
     </div>
     <div class="dashboard-item project">
         <a href="{% url 'project' %}"><h2>Project</h2></a>
     </div>
     <div class="dashboard-item todo">
-        <h2>To-do list</h2>
+        <a href="{% url 'todo' %}"><h2>To-Do List</h2></a>
     </div>
-    <div class="dashboard-item notification">
-        <h2>Notifications</h2>
+    <div class="dashboard-item activity_log">
+        <h2>Activity Log</h2>
     </div>
 </div>
 {% endblock %}
