@@ -44,7 +44,16 @@
 
 
 
-<h2>All Tasks</h2>
+<div class="d-flex justify-content-between">
+    <h2>All Tasks</h2>
+    <div class="container">
+        <div class="return-button-container">
+            <a href="{% url 'dashboard' %}" class="return-button">Return to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+
 <table>
     <thead>
         <tr>
@@ -97,12 +106,7 @@
         {% endfor %}
     </tbody>
 </table>
-<div class="tasks-container">
-    <div class="return-button-container">
-        <a href="{% url 'dashboard' %}" class="return-button">Return to Dashboard</a>
-    </div>
-    <h1>My Tasks</h1>
-</div>
+
 
 
 {% endblock %}
