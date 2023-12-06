@@ -5,6 +5,8 @@ from tasks.models import Team, User
 
 class EditTeamFormTest(TestCase):
     """Unit tests of the add team members form."""
+    databases = "__all__"
+
     def setUp(self):
         self.user1 = User.objects.create(username='@janedoe', email='janedoe@example.org')
         self.user2 = User.objects.create(username='@johndoe', email='johndoe@example.org')

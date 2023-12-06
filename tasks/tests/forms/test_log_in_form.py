@@ -7,6 +7,8 @@ from tasks.models import User
 class LogInFormTestCase(TestCase):
     """Unit tests of the log in form."""
 
+    databases = "__all__"
+
     fixtures = ['tasks/tests/fixtures/default_user.json']
 
     def setUp(self):

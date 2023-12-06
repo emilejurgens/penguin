@@ -8,6 +8,8 @@ from tasks.models import User
 class SignUpFormTestCase(TestCase):
     """Unit tests of the sign up form."""
 
+    databases = "__all__"
+
     def setUp(self):
         self.form_input = {
             'first_name': 'Jane',

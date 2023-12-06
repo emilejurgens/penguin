@@ -8,6 +8,8 @@ from tasks.models import User, Team
 class CreateTeamFormTestCase(TestCase):
     """Unit tests of the create team form."""
 
+    databases = "__all__"
+
     fixtures = [
         'tasks/tests/fixtures/default_user.json',
         'tasks/tests/fixtures/other_users.json'

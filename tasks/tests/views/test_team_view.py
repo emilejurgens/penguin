@@ -8,6 +8,8 @@ from tasks.tests.helpers import reverse_with_next
 class TeamViewTestCase(TestCase):
     """Tests of the team view."""
 
+    databases = "__all__"
+
     fixtures = ['tasks/tests/fixtures/default_user.json',
                 'tasks/tests/fixtures/other_users.json',
                 'tasks/tests/fixtures/default_team.json',]

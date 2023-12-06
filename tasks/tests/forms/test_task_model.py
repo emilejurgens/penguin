@@ -8,6 +8,8 @@ from django.urls import reverse
 
 
 class TestTaskModel(TestCase):
+
+    databases = "__all__"
     fixtures = ['tasks/tests/fixtures/default_user.json']
 
     def setUp(self):

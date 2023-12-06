@@ -9,6 +9,8 @@ from tasks.models import Task
 class UserModelTestCase(TestCase):
     """Unit tests for the User model."""
 
+    databases = "__all__"
+
     
     def setUp(self):
         self.team = Team.objects.create(name='Test Team')

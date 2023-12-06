@@ -7,6 +7,8 @@ from tasks.models import User
 class UserFormTestCase(TestCase):
     """Unit tests of the user form."""
 
+    databases = "__all__"
+
     fixtures = [
         'tasks/tests/fixtures/default_user.json'
     ]

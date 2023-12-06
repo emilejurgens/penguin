@@ -5,6 +5,8 @@ from django.urls import reverse
 from tasks.models import TodoItem
 
 class TodoListViewTest(TestCase):
+
+    databases = "__all__"
     def test_view_url_exists_at_desired_location(self):
         response = self.client.get('/todos/')
         self.assertEqual(response.status_code, 200)

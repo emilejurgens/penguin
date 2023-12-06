@@ -5,6 +5,8 @@ from tasks.forms import PasswordForm
 
 class PasswordFormTestCase(TestCase):
 
+    databases = "__all__"
+
     fixtures = ['tasks/tests/fixtures/default_user.json']
 
     def setUp(self):

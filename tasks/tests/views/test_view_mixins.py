@@ -3,6 +3,7 @@ from django.test import TestCase
 from tasks.views import LoginProhibitedMixin
 
 class LoginProhibitedMixinTestCase(TestCase):
+	databases = "__all__"
 	def test_login_prohibited_throws_exception_when_not_configured(self):
 		mixin = LoginProhibitedMixin()
 		with self.assertRaises(ImproperlyConfigured):

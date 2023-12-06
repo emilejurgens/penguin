@@ -6,6 +6,8 @@ from tasks.models import User
 class UserModelTestCase(TestCase):
     """Unit tests for the User model."""
 
+    databases = "__all__"
+
     fixtures = [
         'tasks/tests/fixtures/default_user.json',
         'tasks/tests/fixtures/other_users.json'

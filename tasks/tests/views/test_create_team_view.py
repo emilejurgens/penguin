@@ -9,6 +9,8 @@ from tasks.tests.helpers import LogInTester
 class CreateTeamViewTestCase(TestCase, LogInTester):
     """Tests of the create team view."""
 
+    databases = "__all__"
+
     fixtures = ['tasks/tests/fixtures/default_user.json', 
                 'tasks/tests/fixtures/other_users.json',]
 
