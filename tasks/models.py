@@ -4,8 +4,9 @@ from django.db import models
 from libgravatar import Gravatar
 from django.conf import settings
 
+from activity_log.models import UserMixin
 
-class User(AbstractUser):
+class User(AbstractUser, UserMixin):
     """Model used for user authentication, and team member related information."""
 
     username = models.CharField(

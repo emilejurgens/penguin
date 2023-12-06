@@ -8,6 +8,7 @@ from tasks.tests.helpers import LogInTester
 
 class SignUpViewTestCase(TestCase, LogInTester):
     """Tests of the sign up view."""
+    databases = '__all__'
 
     fixtures = ['tasks/tests/fixtures/default_user.json']
 

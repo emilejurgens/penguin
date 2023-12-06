@@ -5,7 +5,8 @@ from tasks.models import User
 
 class HomeViewTestCase(TestCase):
     """Tests of the home view."""
-
+    databases = '__all__'
+    
     fixtures = ['tasks/tests/fixtures/default_user.json']
 
     def setUp(self):
