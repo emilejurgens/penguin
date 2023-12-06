@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from tasks import views
-# from tasks.views import create_task, show_all_tasks, delete_task, update_status
 
 urlpatterns = [
     path('admin/', admin.site.urls),
