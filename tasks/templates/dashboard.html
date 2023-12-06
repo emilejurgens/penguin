@@ -10,12 +10,14 @@
         }
         .dashboard-container {
             display: grid;
+            visibility: hidden; 
+            opacity: 0;
             grid-template-columns: repeat(12, 1fr);
             gap: 20px;
             padding: 20px;
             margin-top: 56px;
             background-color: #d3d3d3;
-            animation: fadeInContainer 5s forwards 1s;
+            animation: fadeInContainer 3s ease-in 2s forwards;
             grid-template-areas:
                 "formteam invite project project project project project project project project todo todo"
                 "tasks tasks project project project project project project project project todo todo"
