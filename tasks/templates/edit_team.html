@@ -6,7 +6,7 @@
       <h1>Edit Team</h1>
       <form action="{% url 'edit_team' %}" method="post">
         {% csrf_token %}
-        {% include ''partials/select_users_form.html' with form=form %}
+        {% include 'partials/select_users_form.html' with form=form %}
         <input type="submit" value="Update" class="btn btn-primary">
       </form>
     </div>
