@@ -10,24 +10,48 @@ from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse
 from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, CreateTeamForm, AddMembersForm
 from tasks.helpers import login_prohibited
+from .models import TodoItem 
+from django.http import HttpResponseRedirect
 from .models import User, Team
 from django.views.generic import ListView
 
 
 
 @login_required
-def dashboard(request):
-    """Display the current user's dashboard."""
 
-    current_user = request.user
-    return render(request, 'dashboard.html', {'user': current_user})
+def dashboard(request):
+
+    if not request.session.get('welcome_message_displayed', False):
+        request.session['welcome_message_displayed'] = True
+        context = {'show_welcome_message': True}
+    else:
+        context = {'show_welcome_message': False}
+
+    return render(request, 'dashboard.html', context)
 
 
 @login_prohibited
 def home(request):
     """Display the application's start/home screen."""
 
-    return render(request, 'home.html')
+    return render(request, 'home.html') 
+
+def create_team(request):
+    return render(request, 'create_team.html')
+
+def team(request):
+    return render(request, 'team.html')
+
+def project(request):
+    return render(request, 'project.html')
+
+def all_tasks(request):
+    return render(request, 'all_tasks.html')
+
+def todo(request):
+    return render(request, 'todo.html')
+
+
 
 
 class LoginProhibitedMixin:
@@ -71,7 +95,6 @@ class LogInView(LoginProhibitedMixin, View):
 
     def post(self, request):
         """Handle log in attempt."""
-
         form = LogInForm(request.POST)
         self.next = request.POST.get('next') or settings.REDIRECT_URL_WHEN_LOGGED_IN
         user = form.get_user()
@@ -154,6 +177,26 @@ class SignUpView(LoginProhibitedMixin, FormView):
 
     def get_success_url(self):
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
+    
+    
+
+#To do list       
+def todo(request):
+    tasks = TodoItem.objects.all()
+    return render(request, 'todo.html', {'tasks': tasks})
+
+def add_task(request):
+    if request.method == 'POST':
+        new_task = TodoItem(content=request.POST['content'])
+        new_task.save()
+    return redirect('todo')  
+
+def delete_task(request, task_id):
+    task_to_delete = TodoItem.objects.get(id=task_id)
+    task_to_delete.delete()
+    return redirect('todo')
+
+
     
 class TeamView(LoginRequiredMixin, ListView):
     """Display the team screen."""

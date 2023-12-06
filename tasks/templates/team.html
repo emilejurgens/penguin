@@ -1,5 +1,20 @@
 {% extends 'base_content.html' %}
 {% block content %}
+<style>
+  .return-button-container {
+      margin-bottom: 20px;
+      text-align: right;
+  }
+  .return-button {
+      padding: 10px 20px;
+      background-color: #f0f0f0;
+      color: #333;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+  }
+</style>   
+
 <div class="container">
   <div class="row">
     <div class="col-12">
@@ -15,6 +30,11 @@
         <p>No team joined or created yet</p>
       {% endif %}
     </div>
+  </div>
+</div>
+<div class="container">
+  <div class="return-button-container">
+      <a href="{% url 'dashboard' %}" class="return-button">Return to Dashboard</a>
   </div>
 </div>
 {% endblock %}

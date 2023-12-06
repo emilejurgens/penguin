@@ -1,23 +1,23 @@
 /*
- * Alerts
- */
+* Alerts
+*/
 
 .alert {
-  border-radius: 0px;
+border-radius: 0px;
 }
 
 
 /*
- * Cover page
- */
+* Cover page
+*/
 
 .content {
-  padding-top: 10px;
+padding-top: 10px;
 }
 
 .h-100 {
-  min-height: 100vh;
-  height: 100vh;
+min-height: 100vh;
+height: 100vh;
 }
 
 .vcenter-item{
@@ -26,90 +26,90 @@
 }
 
 /*
- * Cover page
- */
+* Cover page
+*/
 h1.cover-heading {
-  font-size: 4rem;
+font-size: 4rem;
 }
 
 p.cover-text {
-  font-size: 1.7rem;
+font-size: 1.7rem;
 }
 
 .cover-card {
-  background-color: rgba(245, 245, 245, 0.6);
-  max-width: 30rem;
-  padding-top: 30px;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 30px;
-  border-radius: 15%;
+background-color: rgba(245, 245, 245, 0.6);
+max-width: 30rem;
+padding-top: 30px;
+padding-left: 50px;
+padding-right: 50px;
+padding-bottom: 30px;
+border-radius: 15%;
 }
 .cover-card-block {
-  opacity: 1
+opacity: 1
 }
 
 
 /*
- * forms
- */
+* forms
+*/
 .nolabel label {
-  display: none;
+display: none;
 }
 
 ul.errorlist {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+list-style-type: none;
+padding: 0;
+margin: 0;
 }
 
 /*
- * Typefaces
- */
+* Typefaces
+*/
 
 .low-key {
-  color: #777777;
-  font-weight: 300;
+color: #777777;
+font-weight: 300;
 }
 
 .list-title {
-  margin-top: 10px;
-  margin-bottom: 20px;
+margin-top: 10px;
+margin-bottom: 20px;
 }
 
 /*
- * Profile
- */
+* Profile
+*/
 .profile-image {
-  width: 120px;
-  clear:both;
-  float:left;
+width: 120px;
+clear:both;
+float:left;
 }
 
 .profile-text {
-  overflow:hidden;
-  padding-left:20px
+overflow:hidden;
+padding-left:20px
 }
 
 h3.profile-title {
-  margin-bottom: 0px;
+margin-bottom: 0px;
 }
 
 .profile-username {
-  color: #777777;
-  font-weight: 300;
-  font-style: italic;
+color: #777777;
+font-weight: 300;
+font-style: italic;
 }
 
 
 /*
- * Hyperlinks
- */
+* Hyperlinks
+*/
 .content a {
-  text-decoration: none;
-  color: #0d6efd;
+text-decoration: none;
+color: #0d6efd;
 }
 .content a:hover {
-  text-decoration: underline;
-  color: #0d6efd;
+text-decoration: underline;
+color: #0d6efd;
 }

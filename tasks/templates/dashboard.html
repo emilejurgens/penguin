@@ -1,10 +1,133 @@
 {% extends 'base_content.html' %}
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <h1>Welcome to your dashboard {{ user.username }}</h1>
+    <style>
+        body, html {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #d3d3d3;
+            height: 100%;
+            color: #fff;
+        }
+        .dashboard-container {
+            display: grid;
+            visibility: hidden; 
+            opacity: 0;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin-top: 56px;
+            background-color: #d3d3d3;
+            animation: fadeInContainer 3s ease-in 2s forwards;
+            grid-template-areas:
+                "formteam invite project project project project project project project project todo todo"
+                "tasks tasks project project project project project project project project todo todo"
+                "activitylog activitylog activitylog activitylog activitylog activitylog activitylog activitylog activitylog activitylog todo todo";
+        }
+        
+        .dashboard-item.form-team { 
+            grid-area: formteam; 
+        }
+        
+        .dashboard-item.invite { 
+            grid-area: invite; 
+        }
+        
+        .dashboard-item.tasks {
+            grid-area: tasks; 
+        }
+        
+        .dashboard-item.project { 
+            grid-area: project; 
+        }
+        
+        .dashboard-item.todo { 
+            grid-area: todo; 
+        }
+        
+        .dashboard-item.activity_log { 
+            grid-area: activitylog; 
+        }
+        .dashboard-item {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .dashboard-item a {
+            color: #333;
+            text-decoration: none;
+        }
+        .dashboard-item:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .dashboard-item h2 {
+            color: #333;
+            text-align: center;
+        }
+        .welcome-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #303030;
+            text-align: center;
+            animation: fadeOut 3s ease-in-out forwards;
+            z-index: 100;
+        }
+        .welcome-message .line1 {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+        .welcome-message .line2 {
+            font-size: 1.5em;
+            font-weight: normal;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            99% { opacity: 0; }
+            100% { opacity: 0; display: none; }
+        }
+        @keyframes fadeInContainer {
+            0% {
+                opacity: 0;
+                visibility: hidden;
+            }
+            100% {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    </style>
+    
+{% if show_welcome_message %}
+<div class="welcome-message">
+    <div class="line1">Welcome to your dashboard</div>
+    <div class="line2">Here you can view your profile"I need to edit this"</div>
+</div>
+{% endif %}
+<div class="dashboard-container">
+    <div class="dashboard-item form-team">
+        <a href="{% url 'create_team' %}"><h2>create Team</h2></a>
     </div>
-  </div>
+    <div class="dashboard-item invite">
+        <a href="{% url 'teams' %}"><h2>Invite Team Members</h2></a>
+    </div>
+    <div class="dashboard-item tasks">
+        <a href="{% url 'all_tasks' %}"><h2>My Tasks</h2></a>
+    </div>
+    <div class="dashboard-item project">
+        <a href="{% url 'project' %}"><h2>Project</h2></a>
+    </div>
+    <div class="dashboard-item todo">
+        <a href="{% url 'todo' %}"><h2>To-Do List</h2></a>
+    </div>
+    <div class="dashboard-item activity_log">
+        <h2>Activity Log</h2>
+    </div>
 </div>
 {% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+    <style>
+        /* Add your existing styles here */
+        .todo-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        .todo-header {
+            font-size: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
+        .todo-add {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .todo-add input {
+            flex-grow: 1;
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        .todo-add button {
+            padding: 0.5rem 1rem;
+            background-color: darkgrey;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .todo-add button:hover {
+            background-color: #0056b3;
+        }
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+        .todo-list li {
+            padding: 1rem;
+            background: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .todo-list li:last-child {
+            margin-bottom: 0;
+        }
+        .delete-button {
+            color: #dc3545;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+        .return-button-container {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .return-button {
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <div class="return-button-container">
+            <a href="{% url 'dashboard' %}" class="return-button">Return to Dashboard</a>
+        </div>
+        <h2 class="todo-header">My Todo List</h2>
+        <form method="post" action="{% url 'add_task' %}" class="todo-add">
+            {% csrf_token %}
+            <input type="text" name="content" placeholder="Add a new task...">
+            <button type="submit">Add</button>
+        </form>
+
+        <ul class="todo-list">
+            {% for task in tasks %}
+                <li>
+                    {{ task.content }}
+                    <form method="post" action="{% url 'delete_task' task.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">🗑</button>
+                    </form>
+                </li>
+            {% empty %}
+                <li>No tasks yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
+{% endblock %}
