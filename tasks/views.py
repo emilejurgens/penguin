@@ -178,7 +178,7 @@ class SignUpView(LoginProhibitedMixin, FormView):
     
     
 
-#To do list       
+#To do list        
 def todo(request):
     tasks = TodoItem.objects.all()
     return render(request, 'todo.html', {'tasks': tasks})
@@ -247,39 +247,41 @@ class EditTeamView(LoginRequiredMixin, FormView):
     def get(self, request):
         return render(request, 'edit_team.html')
 
-def create_task(request, task_id = None):
-    if task_id:
-        task = get_object_or_404(Task,pk=task_id, created_by=request.user)
-        form = TaskForm(request.POST or None, instance = task)
-    else:
-        form = TaskForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-            task = form.save(commit=False)
-            task.created_by = request.user
-            task.user = request.user
+
+class TaskView(TaskForm):
+    def create_task(request, task_id = None):
+        if task_id:
+            task = get_object_or_404(Task,pk=task_id, created_by=request.user)
+            form = TaskForm(request.POST or None, instance = task)
+        else:
+            form = TaskForm(request.POST or None)
+        if request.method == 'POST' and form.is_valid():
+                task = form.save(commit=False)
+                task.created_by = request.user
+                task.user = request.user
+                task.save()
+                form.save_m2m()
+                return redirect ('all_tasks')
+
+        return render(request, 'create_task.html', {'form':form})
+
+    def show_all_tasks(request):
+        all_tasks = Task.objects.all()
+        for task in all_tasks:
+            print(task.title, task.assigned_to.all())
+        return render(request, 'all_tasks.html', {'all_tasks': all_tasks})
+
+    def update_status(request, task_id):
+        task = get_object_or_404(Task, pk=task_id)
+        if request.method == 'POST':
+            task.status = request.POST.get('status')
             task.save()
-            form.save_m2m()
-            return redirect ('all_tasks')
+            return redirect('all_tasks')
+        return render(request, 'update_task.html', {'task': task})
 
-    return render(request, 'create_task.html', {'form':form})
 
-def show_all_tasks(request):
-    all_tasks = Task.objects.all()
-    for task in all_tasks:
-        print(task.title, task.assigned_to.all())
-    return render(request, 'all_tasks.html', {'all_tasks': all_tasks})
-
-def update_status(request, task_id):
-    task = get_object_or_404(Task, pk=task_id)
-    if request.method == 'POST':
-        task.status = request.POST.get('status')
-        task.save()
+    def delete_task(request, task_id):
+        task = get_object_or_404(Task, pk=task_id)
+        if task.created_by == request.user: 
+            task.delete()
         return redirect('all_tasks')
-    return render(request, 'update_task.html', {'task': task})
-
-
-def delete_task(request, task_id):
-    task = get_object_or_404(Task, pk=task_id)
-    if task.created_by == request.user: 
-        task.delete()
-    return redirect('all_tasks')
