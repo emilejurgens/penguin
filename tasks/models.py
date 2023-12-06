@@ -56,9 +56,9 @@ class Task(models.Model):
     
 
 class Team(models.Model):
-    name = models.CharField(max_length = 30)
-    members = models.ManyToManyField(User)
-    tasks = models.ManyToManyField(Task)
+    name = models.CharField(max_length = 30, blank = False, unique = True)
+    members = models.ManyToManyField(User, blank = True)
+    tasks = models.ManyToManyField(Task, blank = True)
     
     
 class TodoItem(models.Model):

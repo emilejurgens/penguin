@@ -163,7 +163,65 @@ class CreateTeamForm(forms.ModelForm):
         return team
 
     
-class AddMembersForm(forms.ModelForm):
-    """Form enabling users add members to a team."""
+class EditTeamForm(forms.Form):
+    """Form enabling users to add and delete team members and change team's name."""
+
+    old_name = forms.CharField(
+        label = 'Current Team Name', 
+        required = True, 
+        max_length = 30
+    )
+    new_name = forms.CharField(
+        label = 'New Team Name', 
+        required = False,
+        max_length = 30
+    )
+    members_to_add = forms.ModelMultipleChoiceField(
+        queryset = User.objects.all().order_by('username'), 
+        required = False
+    )
+    members_to_delete = forms.ModelMultipleChoiceField(
+        queryset = User.objects.all().order_by('username'),  
+        required = False
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        old_name = cleaned_data.get('old_name')
+        new_name = cleaned_data.get('new_name')
+
+        try:
+            team = Team.objects.get(name=old_name)
+        except Team.DoesNotExist:
+            self.add_error('old_name', 'Team with this name does not exist')
+            raise forms.ValidationError("Team with this name does not exist.")
+        
+        if new_name:
+            try:
+                team_with_new_name = Team.objects.get(name=new_name)
+                self.add_error('new_name', 'Team with this name already exists')
+            except Team.DoesNotExist:
+                pass
+        
+
+        return cleaned_data
     
-    pass
+    def save(self):
+        """Save the changes made to a team."""
+        old_team_name = self.cleaned_data['old_name']
+        new_name = self.cleaned_data['new_name']
+        members_to_add = self.cleaned_data['members_to_add']
+        members_to_delete = self.cleaned_data['members_to_delete']
+        try:
+            team = Team.objects.get(name=old_team_name)
+            if new_name:
+                team.name = new_name
+
+            if members_to_add:
+                team.members.add(*members_to_add)
+
+            if members_to_delete:
+                team.members.remove(*members_to_delete)
+            team.save()
+        except Team.DoesNotExist:
+            raise forms.ValidationError("Team with this name does not exist!")

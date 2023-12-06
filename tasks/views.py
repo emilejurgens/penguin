@@ -8,13 +8,12 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse
-from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, TaskForm, CreateTeamForm, AddMembersForm
+from tasks.forms import LogInForm, PasswordForm, UserForm, SignUpForm, TaskForm, CreateTeamForm, EditTeamForm
 from tasks.helpers import login_prohibited
 from .models import TodoItem, Task 
 from django.http import HttpResponseRedirect
 from .models import User, Team
 from django.views.generic import ListView
-
 
 @login_required
 
@@ -231,24 +230,22 @@ class CreateTeamView(LoginRequiredMixin, FormView):
         messages.add_message(self.request, messages.SUCCESS, "Team created!")
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
     
-class AddMembersView(LoginRequiredMixin, View):
-    """Display the add members screen."""
-    
-    model = AddMembersForm
-    form_class = AddMembersForm
-    template_name = "add_members.html"
+class EditTeamView(LoginRequiredMixin, FormView):
+    model = EditTeamForm
+    template_name = "edit_team.html"
+    form_class = EditTeamForm
 
     def form_valid(self, form):
         self.object = form.save()
-        return super().form_valid(form)
+        return super().form_valid(form)    
     
     def get_success_url(self):
         """Return redirect URL after successful update."""
-        messages.add_message(self.request, messages.SUCCESS, "Team member added!")
+        messages.add_message(self.request, messages.SUCCESS, "Team updated!")
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
     
     def get(self, request):
-        return render(request, 'add_members.html')
+        return render(request, 'edit_team.html')
 
 def create_task(request, task_id = None):
     if task_id:
