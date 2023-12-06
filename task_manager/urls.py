@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from tasks import views
+from tasks.views import create_task, show_all_tasks, delete_task, update_status
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,5 +36,11 @@ urlpatterns = [
     path('teams/', views.TeamView.as_view(), name='teams'),
     path('create_team/', views.CreateTeamView.as_view(), name='create_team'),
     path('add_members/', views.AddMembersView.as_view(), name='add_members'),
-    path('task_view/', views.task_view, name = 'task_view'),
+    path('task/create/', create_task, name='create_task'),
+    path('task/create/<int:task_id>/', create_task, name='create_task'),
+    path('tasks/all/', show_all_tasks, name ='all_tasks'),
+    path('task/delete/<int:task_id>/', delete_task, name='delete_task'),
+    path('task/update/<int:task_id>/', update_status, name='update_status'),
 ]
+
+
