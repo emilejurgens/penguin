@@ -183,13 +183,13 @@ def todo(request):
     tasks = TodoItem.objects.all()
     return render(request, 'todo.html', {'tasks': tasks})
 
-def add_task(request):
+def add_item(request):
     if request.method == 'POST':
         new_task = TodoItem(content=request.POST['content'])
         new_task.save()
     return redirect('todo')  
 
-def delete_task(request, task_id):
+def delete_item(request, task_id):
     task_to_delete = TodoItem.objects.get(id=task_id)
     task_to_delete.delete()
     return redirect('todo')
