@@ -4,6 +4,7 @@ from django.test import TestCase
 from tasks.models import User
 from tasks.models import Team
 from tasks.models import Task
+from datetime import date
  
 
 class UserModelTestCase(TestCase):
@@ -17,8 +18,8 @@ class UserModelTestCase(TestCase):
         self.user1 = User.objects.create(username='@janedoe', email = 'janedoe@example.org')
         self.user2 = User.objects.create(username='@johndoe',  email = 'johndoe@example.org')
     
-        self.task1 = Task.objects.create(title='Task 1')
-        self.task2 = Task.objects.create(title='Task 2')
+        self.task1 = Task.objects.create(title='Task 1', due_date = date(2023,3,12), created_by = self.user1)
+        self.task2 = Task.objects.create(title='Task 2', due_date = date(2023,4,23), created_by = self.user1)
 
     def test_valid_team(self):
         self._assert_team_is_valid()

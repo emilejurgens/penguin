@@ -1,0 +1,55 @@
+{% for field in form %}
+    {% if field.name != 'members_to_add' and field.name != 'members_to_delete' %}   
+        <div class="mb-3">
+        <div>
+            {{ field.label_tag }}  
+        </div>
+        <div class="">
+            {{ field }}
+        </div>
+        {% if field.errors %}
+            <div class="invalid-feedback">
+            {{ field.errors }}
+            </div>
+        {% endif %}
+        </div>
+    {% endif %}
+{% endfor %}
+
+
+<p>Members to add:</p>
+<div class="overflow-auto border rounded" style="max-height: 495px;">
+    {% for field in form.members_to_add %}
+        <div class="form-check">
+        {{ field }}
+        {{ field.label_tag }}
+        </div>
+    {% endfor %}
+</div>
+
+ <div class="mb-3">
+    {% if form.members_to_add.errors %}
+        <div class="invalid-feedback">
+        {{ form.members_to_add.errors }}
+        </div>
+    {% endif %}
+</div>
+
+<p>Members to delete:</p>
+<div class="overflow-auto border rounded" style="max-height: 495px;">
+    {% for field in form.members_to_delete %}
+        <div class="form-check">
+            {{ field }}
+            {{ field.label_tag }}
+        </div>
+    {% endfor %}
+</div>
+
+<div class="mb-3">
+    {% if form.members_to_delete.errors %}
+        <div class="invalid-feedback">
+            {{ form.members_to_delete.errors }}
+        </div>
+    {% endif %}
+</div>
+

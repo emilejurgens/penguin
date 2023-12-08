@@ -178,11 +178,13 @@ class EditTeamForm(forms.Form):
     )
     members_to_add = forms.ModelMultipleChoiceField(
         queryset = User.objects.all().order_by('username'), 
-        required = False
+        required = False,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
     )
     members_to_delete = forms.ModelMultipleChoiceField(
         queryset = User.objects.all().order_by('username'),  
-        required = False
+        required = False,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
     )
 
     def clean(self):
