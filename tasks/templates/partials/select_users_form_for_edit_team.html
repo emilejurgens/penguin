@@ -1,18 +1,24 @@
+{% load widget_tweaks %}
 {% for field in form %}
-    {% if field.name != 'members_to_add' and field.name != 'members_to_delete' %}   
-        <div class="mb-3">
-        <div>
-            {{ field.label_tag }}  
-        </div>
-        <div class="">
-            {{ field }}
-        </div>
-        {% if field.errors %}
-            <div class="invalid-feedback">
-            {{ field.errors }}
-            </div>
+    {% if field.name != 'members_to_add' and field.name != 'members_to_delete' %}  
+    <div class="mb-3">
+      {{ field.label_tag }} 
+        {% if form.is_bound %}
+            {% if field.errors %}
+                {% render_field field class="form-control is-invalid" %}
+            {% else %}
+                {% render_field field class="form-control is-valid" %}
+            {% endif %}
+        {% else %}
+            {% render_field field class="form-control" %}
         {% endif %}
+        <div class="valid-feedback">
+          Looks good!
         </div>
+        <div class="invalid-feedback">
+        {{ field.errors }}
+        </div>
+    </div>
     {% endif %}
 {% endfor %}
 
@@ -28,9 +34,9 @@
 </div>
 
  <div class="mb-3">
-    {% if form.members_to_add.errors %}
+    {% if form.errors %}
         <div class="invalid-feedback">
-        {{ form.members_to_add.errors }}
+        {{ form.errors }}
         </div>
     {% endif %}
 </div>
@@ -52,4 +58,5 @@
         </div>
     {% endif %}
 </div>
+
 
