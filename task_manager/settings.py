@@ -90,7 +90,7 @@ DATABASES = {
 }
 
 
-# For writing log to another DB
+# For writing log to 'logs' database
 
 DATABASE_ROUTERS = ['activity_log.router.DatabaseAppsRouter']
 DATABASE_APPS_MAPPING = {'activity_log': 'logs'}
@@ -152,19 +152,18 @@ MESSAGE_TAGS = {
 }
 
 
-# App settings
+# Activity Log settings
 
 ACTIVITYLOG_AUTOCREATE_DB = False
 
-# Log anonymous actions?
+# Activity log for anonymous users
 ACTIVITYLOG_ANONYMOUS = True
 
-# Update last activity datetime in user profile. Needs updates for user model.
+# Update last activity datetime in user. 
 ACTIVITYLOG_LAST_ACTIVITY = True
 
-# Only this methods will be logged
+# This methods will be logged
 ACTIVITYLOG_METHODS = ('POST', 'GET')
 
-# List of response statuses, which logged. By default - all logged.
-# Don't use with ACTIVITYLOG_EXCLUDE_STATUSES
+# Response of statuses, which all logged.
 ACTIVITYLOG_STATUSES = (200, )

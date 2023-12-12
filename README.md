@@ -28,10 +28,11 @@ Install all required packages:
 $ pip3 install -r requirements.txt
 ```
 
-Migrate the database:
+Migrate the databases:
 
 ```
 $ python3 manage.py migrate
+$ python3 manage.py migrate --database=logs
 ```
 
 Seed the development database with:
@@ -50,4 +51,6 @@ $ python3 manage.py test
 ## Sources
 The packages used by this application are specified in `requirements.txt`
 
-*Declare are other sources here, and remove this line*
+The source code: https://github.com/sebatyler/django-user-activity-log
+Number of lines of code reused: 13
+These code reused in: settings.py (12 line), models.py (1 line)
