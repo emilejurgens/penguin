@@ -10,20 +10,24 @@
         }
         .dashboard-container {
             display: grid;
-            visibility: hidden; 
-            opacity: 0;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
+            gap: 100px; 
             padding: 20px;
             margin-top: 56px;
             background-color: #d3d3d3;
             animation: fadeInContainer 1.8s ease-in 0.2s forwards;
             grid-template-areas:
-                "formteam invite project project project project project project project project todo todo"
-                "tasks tasks project project project project project project project project todo todo"
-                "activitylog activitylog activitylog activitylog activitylog activitylog activitylog activitylog activitylog activitylog todo todo";
+                "formteam"
+                "invite"
+                "tasks"
+                "todo";
+                justify-content: center; 
+                align-items: center; 
+                grid-template-columns: auto; 
+                grid-template-rows: repeat(4, minmax(0, 100px)); 
+                height: 100%; 
+                width: 100%; 
+            
         }
-        
         .dashboard-item.form-team { 
             grid-area: formteam; 
         }
@@ -36,26 +40,22 @@
             grid-area: tasks; 
         }
         
-        .dashboard-item.project { 
-            grid-area: project; 
-        }
-        
         .dashboard-item.todo { 
             grid-area: todo; 
         }
-        
-        .dashboard-item.activity_log { 
-            grid-area: activitylog; 
-        }
         .dashboard-item {
             background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease-in-out;
+            padding: 70px; 
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s; 
             display: flex;
             justify-content: center;
             align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease;
+            width: 750px; 
+            height: 450x; 
         }
         .dashboard-item a {
             color: #333;
@@ -63,7 +63,8 @@
         }
         .dashboard-item:hover {
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
+            transform: scale(1.05);
+        }   
         .dashboard-item h2 {
             color: #333;
             text-align: center;
@@ -120,14 +121,8 @@
     <div class="dashboard-item tasks">
         <a href="{% url 'all_tasks' %}"><h2>My Tasks</h2></a>
     </div>
-    <div class="dashboard-item project">
-        <a href="{% url 'project' %}"><h2>Project</h2></a>
-    </div>
     <div class="dashboard-item todo">
         <a href="{% url 'todo' %}"><h2>To-Do List</h2></a>
-    </div>
-    <div class="dashboard-item activity_log">
-        <h2>Activity Log</h2>
     </div>
 </div>
 {% endblock %}
