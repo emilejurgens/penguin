@@ -51,6 +51,6 @@ $ python3 manage.py test
 ## Sources
 The packages used by this application are specified in `requirements.txt`
 
-The source code: https://github.com/sebatyler/django-user-activity-log
-Number of lines of code reused: 13
-These code reused in: settings.py (12 line), models.py (1 line)
+The source code: https://github.com/sebatyler/django-user-activity-log.
+Number of lines of code reused: 13.
+These code reused in: settings.py (12 line), models.py (1 line).

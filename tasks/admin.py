@@ -21,5 +21,6 @@ class TeamAdmin(admin.ModelAdmin):
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     """Configuration of the admin interface for tasks."""
-
-    pass
+    list_display = [
+        'title', 'user', 'description', 'due_date', 'status', 'created_by',
+    ]
