@@ -1,8 +1,9 @@
 {% load widget_tweaks %}
+{% render_field form.field_name class="form-control" %}
 {% for field in form %}
     {% if field.name != 'members_to_add' and field.name != 'members_to_delete' %}  
     <div class="mb-3">
-      {{ field.label_tag }} 
+        {{ field.label_tag }} 
         {% if form.is_bound %}
             {% if field.errors %}
                 {% render_field field class="form-control is-invalid" %}

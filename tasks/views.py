@@ -243,9 +243,6 @@ class EditTeamView(LoginRequiredMixin, FormView):
         """Return redirect URL after successful update."""
         messages.add_message(self.request, messages.SUCCESS, "Team updated!")
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
-    
-    def get(self, request):
-        return render(request, 'edit_team.html')
 
 
 class TaskView(TaskForm):
