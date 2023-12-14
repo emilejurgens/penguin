@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from tasks.models import User, Team
+from tasks.models import User, Team, Task
 
 class Command(BaseCommand):
     """Build automation command to unseed the database."""
@@ -11,3 +11,4 @@ class Command(BaseCommand):
 
         User.objects.filter(is_staff=False).delete()
         Team.objects.all().delete()
+        Task.objects.all().delete()
