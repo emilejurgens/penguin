@@ -231,6 +231,7 @@ class CreateTeamView(LoginRequiredMixin, FormView):
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
     
 class EditTeamView(LoginRequiredMixin, FormView):
+    """Display the edit team screen."""
     model = EditTeamForm
     template_name = "edit_team.html"
     form_class = EditTeamForm
