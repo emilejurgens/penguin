@@ -5,6 +5,7 @@ from tasks.models import User, Task, Team
 import pytz
 from faker import Faker
 from random import randint, random, sample, shuffle
+from datetime import datetime, timedelta
 
 user_fixtures = [
     {'username': '@johndoe', 'email': 'john.doe@example.org', 'first_name': 'John', 'last_name': 'Doe'},
@@ -19,7 +20,7 @@ class Command(BaseCommand):
     DEFAULT_PASSWORD = 'Password123'
     help = 'Seeds the database with sample data'
     TEAM_COUNT = 30
-    TASKS_COUNT = 50
+    TASK_COUNT = 50
 
     def __init__(self):
         self.faker = Faker('en_GB')
@@ -28,6 +29,7 @@ class Command(BaseCommand):
         self.create_users()
         self.users = User.objects.all()
         self.create_teams()
+        self.create_tasks()
 
     def create_users(self):
         self.generate_user_fixtures()
@@ -109,6 +111,50 @@ class Command(BaseCommand):
         for member_username in data['members']:
             member = User.objects.get(username=member_username)
             new_team.members.add(member)
+
+    def create_tasks(self):
+        self.generate_random_tasks()
+
+    def generate_random_tasks(self):
+        task_count = Task.objects.count()
+        while  task_count < self.TASK_COUNT:
+            print(f"Seeding task {task_count}/{self.TASK_COUNT}", end='\r')
+            self.generate_task()
+            task_count = Task.objects.count()
+        print("Task seeding complete.      ")
+
+    def generate_random_date(self):
+        start_date = datetime.strptime('2025-01-01', '%Y-%m-%d')
+        end_date = datetime.strptime('2026-01-01', '%Y-%m-%d')
+
+        random_date = start_date + timedelta(days=randint(0, (end_date - start_date).days))
+        return random_date.strftime('%Y-%m-%d')
+    
+    def generate_task(self):
+        title = self.faker.word()
+        description = self.faker.sentence()
+        due_date = self.generate_random_date()
+        status = self.faker.random_element(elements=['in_progress', 'completed'])
+        created_by = User.objects.order_by('?').first()
+        assigned_to = User.objects.order_by('?').first()
+        self.try_create_task({'title': title, 'description': description, 'due_date': due_date, 'status': status, 'created_by': created_by, 'assigned_to': assigned_to})
+
+    def try_create_task(self, data):
+        try:
+            self.create_task(data)
+        except:
+            pass
+
+    def create_task(self, data):
+        assigned_user_id = data['assigned_to'].id
+        task = Task.objects.create(
+            title=data['title'],
+            description=data['description'],
+            due_date=data['due_date'],
+            status=data['status'],
+            created_by=data['created_by'],
+        )
+        task.assigned_to.set([assigned_user_id])
 
 def create_username(first_name, last_name):
     return '@' + first_name.lower() + last_name.lower()
