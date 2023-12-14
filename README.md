@@ -54,3 +54,8 @@ The packages used by this application are specified in `requirements.txt`
 The source code: https://github.com/sebatyler/django-user-activity-log.
 Number of lines of code reused: 13.
 These code reused in: settings.py (12 line), models.py (1 line).
+
+Used ChatGPT in penguin/tasks/management/coomands/seed.py
+def generate_task : 4 lines of code, about 50% of the unit
+def generate_random_date : 4 lines of code, whole unit
+def generate_team : 2 lines of code, less than 50% of the unit
